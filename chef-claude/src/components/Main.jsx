@@ -13,6 +13,17 @@ export default function Main() {
     "Spinach",
   ]);
 
+  const recipeSection = React.useRef(null);
+  React.useEffect(() => {
+    if (recipeSection !== null) {
+      // recipeSection.current.scrollIntoView();
+      const yCoord = recipeSection.current.getBoundingClientRect().top + window.scrollY
+            window.scroll({
+                top: yCoord,
+                behavior: "smooth"
+            })
+    }
+  }, []);
   const [recipeShown, setRecipeShown] = React.useState(false);
   const toggleRecipeShown = () => {
     setRecipeShown((prevShown) => !prevShown);
@@ -40,6 +51,7 @@ export default function Main() {
       </form>
       {ingredients.length > 0 && (
         <IngredientsList
+          recipeSection={recipeSection}
           ingredients={ingredients}
           toggleRecipeShown={toggleRecipeShown}
         />
